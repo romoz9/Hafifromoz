@@ -1,0 +1,4 @@
+---
+# vars file for final-role
+mountpoint: /mnt/nfs-mount
+nfssrc: 10.11.71.212:/nfsshare
