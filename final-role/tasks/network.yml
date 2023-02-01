@@ -1,0 +1,22 @@
+---
+
+#Increase tcp-buffer allowed open ports range - 1024 to 65000
+- name: Increase tcp-buffer allowed open ports range - 1024 to 65000
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_local_port_range
+    value: "{{ tcp-buffer_allowed_open_ports_range }}"
+    state: present
+    reload: yes
+
+#Increase tcp-buffer read write memory limit to 2mb
+- name: Increase tcp-buffer read write memory limit to 2mb
+  ansible.posix.sysctl:
+    - name: "{{ item }}"
+      value: "{{ tcp-buffer_read_write_memory_limit }}"
+      state: present
+      reload: yes
+  with_items:
+    - net.core.wmem_max
+    - net.core.rmem_max
+    - net.core.rmem_default
+    - net.core.wmem_default

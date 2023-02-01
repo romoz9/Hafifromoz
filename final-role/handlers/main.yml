@@ -1,2 +1,15 @@
 ---
 # handlers file for final-role
+- name: Restart the SSH service
+  service:
+    name: sshd
+    state: restarted
+
+- name: systemctl restart docker
+  service:
+    name: docker
+    state: restarted
+
+- name: systemctl daemon-reload
+  sudo: yes
+  command: systemctl daemon-reload

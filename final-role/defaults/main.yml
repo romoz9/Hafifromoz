@@ -1,2 +1,10 @@
 ---
-# defaults file for final-role
+mountpoint: /mnt/mountdirectory
+nfssrc: ipaddress:/exporteddirectory
+dependencies:
+  - git
+  - docker
+  - nslookup
+  - dig
+  - nfs-utils
+  - nfs4-acl-tools

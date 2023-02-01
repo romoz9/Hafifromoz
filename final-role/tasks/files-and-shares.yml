@@ -1,0 +1,24 @@
+---
+
+
+#NFS Mount
+- name: Create a mountpoint if it does not exist
+  ansible.builtin.file:
+    path: {{ mountpoint }}
+    state: directory
+
+- name: Mount nfs share
+  ansible.posix.mount:
+    src: "{{ nfssrc }}"
+    path: "{{ mountpoint }}"
+    opts: rw,sync,hard
+    state: mounted
+    fstype: nfs
+
+#Increase open files limit to 50000
+- name: Increase open files limit to 50000
+  ansible.posix.sysctl:
+    name: fs.file-max
+    value: "{{ filelimit }}"
+    state: present
+    reload: yes

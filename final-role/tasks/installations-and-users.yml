@@ -1,0 +1,28 @@
+---
+
+#install dependencies
+- name: Install dependencies
+  ansible.builtin.yum:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ dependencies }}"
+
+- name: Start services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items: "{{ services }}"
+
+#add user admin
+- name: Create admin user with password
+  ansible.builtin.user:
+    name: admin
+    password: Bsmch@500K!
+
+- name: Make admin user an admin 4real
+  community.general.sudoers:
+    name: sudo-for-admin
+    state: present
+    user: admin
+    commands: ALL

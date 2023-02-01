@@ -1,0 +1,19 @@
+---
+# vars file for final-role
+mountpoint: /mnt/nfs-mount
+nfssrc: 10.11.71.212:/nfsshare
+dependencies:
+  - git
+  - http://mirror.centos.org/centos/7/extras/x86_64/Packages/container-selinux-2.107-3.el7.noarch.rpm
+  - docker-ce
+  - docker-ce-cli
+  - docker-ce-cli
+  - bind-utils #nslookup and dig
+  - nfs-utils
+  - nfs4-acl-tools
+services:
+  - docker
+  - firewalld
+filelimit: '5000'
+tcp-buffer_allowed_open_ports_range: '1024 65000'
+tcp-buffer_read_write_memory_limit: '2000000'

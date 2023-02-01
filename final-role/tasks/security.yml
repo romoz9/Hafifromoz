@@ -1,0 +1,28 @@
+---
+
+#Disable root authentication
+- name: Disable root ssh authentication
+  lineinfile:
+        dest: /etc/ssh/sshd_cofig
+        regexp: '^PermitRootLogin'
+        line: "PermitRootLogin no"
+  notify: Restart the ssh service
+
+# Enble Selinux with containers
+- name: Turn on Selinux
+  ansible.posix.selinux:
+    policy: targeted
+    state: enforcing
+
+- name: Enable the container cgroup Boolean value setsebool container_manage_cgroup 1
+  ansible.posix.seboolean:
+    name: container_manage_cgroup
+    state: yes
+
+- name: Add "selinux-enabled": true to /etc/docker/daemon.json
+    blockinfile:
+      path: /etc/docker/daemon.json
+      block: |
+       "selinux-enabled": true
+    notify: systemctl daemon-reload
+    notify: systemctl restart docker
